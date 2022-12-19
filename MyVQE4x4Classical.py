@@ -12,6 +12,8 @@ from scipy import linalg
 from scipy.optimize import minimize
 from numpy import random
 
+M = ['Nelder-Mead', 'Powell', 'CG', 'BFGS']
+algorithm = method='Powell'
 
 pauli_0 = np.array([[1, 0],
                    [0, 1]])
@@ -126,9 +128,8 @@ guess = [2*math.pi*random.uniform(0,1), 2*math.pi*random.uniform(0,1),
          2*math.pi*random.uniform(0,1), 2*math.pi*random.uniform(0,1)]
 
 
-M = ['Nelder-Mead', 'Powell', 'CG', 'BFGS']
-E_min = minimize(VQE, guess, args = (H), method='Powell',
-               options={'xatol': 1e-10, 'disp': True})
+E_min = minimize(VQE, guess, args = (H), method=algorithm,
+               tol=1e-10, options={'disp': True})
 
 #
 # Compute the errors on the eigenvalues
@@ -137,6 +138,7 @@ error_eig = abs(E_min.fun-E_min_true)
 error_eig_rel = abs(E_min.fun-E_min_true) / abs(E_min_true)
 
 print('The true value of the smallest eigenvalue is:', E_min_true.real)
+print("Minimization algorithm = " , algorithm)
 print('Eigenvalue Error |E - E^{true}| = ' , error_eig )
 print('Eigenvalue Relative Error |(E - E^{true}) / E^{true}| = ' , error_eig_rel )
 
