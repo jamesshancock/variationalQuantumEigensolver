@@ -13,7 +13,8 @@ from scipy.optimize import minimize
 from numpy import random
 
 M = ['Nelder-Mead', 'Powell', 'CG', 'BFGS']
-algorithm = method='Powell'
+algorithm = 'Powell'
+#algorithm = 'Nelder-Mead'
 
 pauli_0 = np.array([[1, 0],
                    [0, 1]])
@@ -25,7 +26,7 @@ pauli_3 = np.array([[1, 0],
                    [0, -1]])
 
 #choosing the coefficients for the hamiltonian
-a = random.rand()
+#a = random.rand()
 h = np.array([[0.0, 0.0, 0.0, 0.0],
              [0.0, 1.0, 0.0, 0.0],
              [0.0, 0.0, 0.0, 0.0],
@@ -49,7 +50,7 @@ E_true, EigenVectors = np.linalg.eig(H)
 E_min_true = min(E_true)
 print('The true value of the smallest eigenvalue is:', E_min_true.real)
 
-d = np.array([[1],[0]])
+#
 
 #function for calculating the expectation value
 def expected(vec,Hamil):
@@ -91,6 +92,7 @@ def create_vec(var):
                      [0,0,0,1],
                      [0,0,1,0]])
 
+    d = np.array([[1],[0]])
     ini = np.kron(d,d)
     block1 = np.kron(Rytheta1, Rytheta2)
     block2 = np.kron(Rzphi1,Rzphi2)
@@ -121,6 +123,15 @@ def VQE(var,Hamil):
 #   Minization
 #
 
+Nfeval = 1
+
+def callbackF(Xi):
+    global Nfeval
+    ff =  VQE(Xi,H)
+    print("Iter", Nfeval, Xi, "eigenvalue_min=" , ff)
+    Nfeval += 1
+
+
 
 guess = [2*math.pi*random.uniform(0,1), 2*math.pi*random.uniform(0,1), 
          2*math.pi*random.uniform(0,1), 2*math.pi*random.uniform(0,1),
@@ -129,6 +140,7 @@ guess = [2*math.pi*random.uniform(0,1), 2*math.pi*random.uniform(0,1),
 
 
 E_min = minimize(VQE, guess, args = (H), method=algorithm,
+               callback=callbackF,
                tol=1e-10, options={'disp': True})
 
 #
