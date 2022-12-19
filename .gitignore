@@ -1,0 +1,13 @@
+*~
+*.log
+*.aux
+*.out
+*.pdf
+*.toc
+/src/*.aux
+*.nav
+*.snm
+.DS_Store
+*.vrb
+develop
+configs_fix_8888
