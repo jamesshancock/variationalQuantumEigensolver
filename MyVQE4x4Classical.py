@@ -53,7 +53,7 @@ def expected(vec,Hamil):
     return v
 
 #function that generates a vector guess and calculates the expectation value 
-def VQE(var,Hamil):
+def create_vec(var):
     phi_1 = var[0]
     phi_2 = var[1]
     phi_3 = var[2]
@@ -96,8 +96,18 @@ def VQE(var,Hamil):
     step4 = block3.dot(step3)
     vec = block4.dot(step4)
 
+    return vec
+
+def VQE(var,Hamil):
+    """
+    Create the vec from the parameters var
+
+    Est = <vec, Hamil * vec>
+    """
+    vec = create_vec(var)
     Est = expected(vec,Hamil)
     return Est
+
 
 
 #
