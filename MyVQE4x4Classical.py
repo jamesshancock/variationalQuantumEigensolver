@@ -1,3 +1,4 @@
+
 import math
 import cmath
 import random
@@ -131,6 +132,7 @@ E_min = minimize(VQE, guess, args = (H), method='Powell',
 error_eig = abs(E_min.fun-E_min_true)
 error_eig_rel = abs(E_min.fun-E_min_true) / abs(E_min_true)
 
+print('The true value of the smallest eigenvalue is:', E_min_true.real)
 print('Error |E - E^{true}| = ' , error_eig )
 print('Relative Error |(E - E^{true}) / E^{true}| = ' , error_eig_rel )
 
@@ -140,3 +142,19 @@ print('Relative Error |(E - E^{true}) / E^{true}| = ' , error_eig_rel )
 
 print("Eigenvector analysis")
 print(E_min.x)
+
+lowest_eigenvec_est = create_vec(E_min.x)
+
+
+print('lowest eigenvector = ' , lowest_eigenvec_est)
+
+for i in range(0, 4) :
+   dd_norm = np.vdot(EigenVectors[:,i] , EigenVectors[:,i])
+   dd = np.vdot(EigenVectors[:,i] , lowest_eigenvec_est)
+   nrm = EigenVectors[0,i] / lowest_eigenvec_est[0]
+   tmp = dd / nrm[0]
+#   print("debug = " , nrm[0] , tmp)
+   dd *= nrm[0]
+
+   print(f"Exact Eigenvalue = {E_true[i].real:.3f}" , f"dot_prod = {dd:.3f}" )
+#   print(EigenVectors[:,i])
