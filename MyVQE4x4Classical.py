@@ -145,12 +145,13 @@ print('Eigenvalue Relative Error |(E - E^{true}) / E^{true}| = ' , error_eig_rel
 #
 
 print("Eigenvector analysis")
-print(E_min.x)
 
 lowest_eigenvec_est = create_vec(E_min.x)
 
 
-print('lowest eigenvector = ' , lowest_eigenvec_est)
+print('Estimated lowest eigenvector = ' )
+for i in range(0,4) :
+  print(i, lowest_eigenvec_est[i])
 
 print("Test of the eigenvector")
 print("Eigenvalue   <EigenVec,EigenVec_min_est> ")
