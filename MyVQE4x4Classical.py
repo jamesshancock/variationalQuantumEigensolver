@@ -99,6 +99,12 @@ def VQE(var,Hamil):
     Est = expected(vec,Hamil)
     return Est
 
+
+#
+#   Mimization
+#
+
+
 guess = [2*math.pi*random.uniform(0,1), 2*math.pi*random.uniform(0,1), 
          2*math.pi*random.uniform(0,1), 2*math.pi*random.uniform(0,1),
          2*math.pi*random.uniform(0,1), 2*math.pi*random.uniform(0,1), 
@@ -108,9 +114,19 @@ guess = [2*math.pi*random.uniform(0,1), 2*math.pi*random.uniform(0,1),
 M = ['Nelder-Mead', 'Powell', 'CG', 'BFGS']
 E_min = minimize(VQE, guess, args = (H), method='Powell',
                options={'xatol': 1e-10, 'disp': True})
-error = abs(E_min.fun-E_min_true)
-print('Error = '+str(error))
-#Minimizer_kwargs = {'args': H}
-#E_min2 = scipy.optimize.basinhopping(VQE, guess, minimizer_kwargs=Minimizer_kwargs)
-#error = abs(E_min2.fun-E_min_true)
-#print(error)
+
+#
+# Compute the errors on the eigenvalues
+#
+error_eig = abs(E_min.fun-E_min_true)
+error_eig_rel = abs(E_min.fun-E_min_true) / abs(E_min_true)
+
+print('Error |E - E^{true}| = ' , error_eig )
+print('Relative Error |(E - E^{true}) / E^{true}| = ' , error_eig_rel )
+
+#
+# Compute the errors on the eigenvectors
+#
+
+print("Eigenvector analysis")
+print(E_min.x)
