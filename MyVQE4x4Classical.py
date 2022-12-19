@@ -1,3 +1,7 @@
+#  Compute the lowest eigenvalue using the
+#  Variational Quantum Algorithm.
+#  This is a full clasical algorithm
+#
 
 import math
 import cmath
@@ -112,7 +116,7 @@ def VQE(var,Hamil):
 
 
 #
-#   Mimization
+#   Minization
 #
 
 
@@ -133,8 +137,8 @@ error_eig = abs(E_min.fun-E_min_true)
 error_eig_rel = abs(E_min.fun-E_min_true) / abs(E_min_true)
 
 print('The true value of the smallest eigenvalue is:', E_min_true.real)
-print('Error |E - E^{true}| = ' , error_eig )
-print('Relative Error |(E - E^{true}) / E^{true}| = ' , error_eig_rel )
+print('Eigenvalue Error |E - E^{true}| = ' , error_eig )
+print('Eigenvalue Relative Error |(E - E^{true}) / E^{true}| = ' , error_eig_rel )
 
 #
 # Compute the errors on the eigenvectors
@@ -148,12 +152,17 @@ lowest_eigenvec_est = create_vec(E_min.x)
 
 print('lowest eigenvector = ' , lowest_eigenvec_est)
 
+print("Test of the eigenvector")
+print("Eigenvalue   <EigenVec,EigenVec_min_est> ")
 for i in range(0, 4) :
    dd_norm = np.vdot(EigenVectors[:,i] , EigenVectors[:,i])
    dd = np.vdot(EigenVectors[:,i] , lowest_eigenvec_est)
+
+   # The eigenvectors from the two methods can be differ by a factor
+   # of e^{i theta}. The normalization can be obtained by looking at the
+   # ratio of the first elments
    nrm = EigenVectors[0,i] / lowest_eigenvec_est[0]
    tmp = dd / nrm[0]
-#   print("debug = " , nrm[0] , tmp)
    dd *= nrm[0]
 
    print(f"Exact Eigenvalue = {E_true[i].real:.3f}" , f"dot_prod = {dd:.3f}" )
