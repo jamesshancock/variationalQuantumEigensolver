@@ -11,3 +11,4 @@
 *.vrb
 develop
 configs_fix_8888
+*.npy

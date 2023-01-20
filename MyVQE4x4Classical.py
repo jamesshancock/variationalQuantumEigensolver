@@ -15,36 +15,15 @@ from numpy import random
 M = ['Nelder-Mead', 'Powell', 'CG', 'BFGS']
 algorithm = 'Powell'
 #algorithm = 'Nelder-Mead'
+filename = "H_store_A.npy"
 
-pauli_0 = np.array([[1, 0],
-                   [0, 1]])
-pauli_1 = np.array([[0, 1],
-                   [1, 0]])
-pauli_2 = np.array([[0, -1j],
-                   [1j, 0]])
-pauli_3 = np.array([[1, 0],
-                   [0, -1]])
+try:
+  H = np.load(filename)
+  print("Loaded the matrix from ", filename)
+except:
+  print("Error loading matrix from " , filename)  
+  sys.exit(0)
 
-#choosing the coefficients for the hamiltonian
-#a = random.rand()
-h = np.array([[0.0, 0.0, 0.0, 0.0],
-             [0.0, 1.0, 0.0, 0.0],
-             [0.0, 0.0, 0.0, 0.0],
-             [0.0, 0.0, 3.4, 0.0]])
-
-
-H = np.zeros((4,4))
-
-pauli = 'pauli'
-
-#generating the hamiltonian
-for k in range(4):
-    for s in range(4):
-        matrix1 = locals()[pauli +'_'+str(k)]
-        matrix2 = locals()[pauli +'_'+str(s)]
-        Pauli_kron = np.kron(matrix1,matrix2)
-        H = H + h[k,s]*Pauli_kron
-        
 #showing the numerical value for E_min
 E_true, EigenVectors = np.linalg.eig(H)
 E_min_true = min(E_true)

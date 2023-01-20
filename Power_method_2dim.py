@@ -1,4 +1,4 @@
-#  Power method for an arbitrary matrix
+#  Power method for order 2 matrix
 #
 #
 
@@ -17,27 +17,21 @@ def RQ(A,b):
     bottom = np.dot(b_star,b)
     return top/bottom
 
+pauli_0 = np.array([[1, 0],
+                   [0, 1]])
+pauli_1 = np.array([[0, 1],
+                   [1, 0]])
+pauli_2 = np.array([[0, -1j],
+                   [1j, 0]])
+pauli_3 = np.array([[1, 0],
+                   [0, -1]])
 
-# Load the matrix from file
-
-filename = "H_store_A.npy"
-
-try:
-  H = np.load(filename)
-  print("Loaded the matrix from ", filename)
-except:
-  print("Error loading matrix from " , filename)  
-  sys.exit(0)
-
-print("Size of matrix " , H.size)
-print("Shape of matrix " , H.shape)
-
+H = 5/2*pauli_0 + -1/2*pauli_3
 E_true, EigenVectors = np.linalg.eig(H)
 E_min_true = min(E_true)
 print(E_min_true.real)
 
-dim = H.shape[0]
-b = np.random.rand(dim,1)
+b = np.random.rand(2,1)
 bN = power_method(H,b,300)
 lambdaN = RQ(H,bN)
 print(lambdaN)

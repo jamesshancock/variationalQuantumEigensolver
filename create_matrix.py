@@ -24,11 +24,22 @@ pauli_3 = np.array([[1, 0],
 
 #choosing the coefficients for the hamiltonian
 #a = random.rand()
-h = np.array([[0.0, 0.0, 0.0, 0.0],
+
+def create_pauli_coeff_A() :
+   h = np.array([[0.0, 0.0, 0.0, 0.0],
              [0.0, 1.0, 0.0, 0.0],
              [0.0, 0.0, 0.0, 0.0],
              [0.0, 0.0, 3.4, 0.0]])
+   return h,"H_store_A"
 
+# select the matrix to use
+create_pauli_coeff = create_pauli_coeff_A
+
+#
+#  create the matrix
+#
+
+h, filename = create_pauli_coeff()
 
 H = np.zeros((4,4))
 
@@ -42,3 +53,11 @@ for k in range(4):
         Pauli_kron = np.kron(matrix1,matrix2)
         H = H + h[k,s]*Pauli_kron
         
+
+#
+#  save the matrix to disk
+#
+
+np.save(filename, H)
+
+print("The matrix is saved in the file" , filename)
