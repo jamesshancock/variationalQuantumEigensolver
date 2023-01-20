@@ -5,24 +5,38 @@ import pickle
 import numpy as np
 import math
 
-file_in = "power_store.pick"
-with open(file_in, "rb") as f:
-    data = pickle.load(f)
 
-print("Loading data from " , file_in )
+def load_eigen(file_in) :
 
-eig_exact = data[0]
-eig_iter  = data[1]
 
-print(eig_iter)
+  with open(file_in, "rb") as f:
+      data = pickle.load(f)
 
-print("Dense eigenvalue = ", eig_exact)
+  print("Loading data from " , file_in )
 
-iter_ = np.array(range(0, len(eig_iter) ))
+  eig_exact = data[0]
+  eig_iter  = data[1]
 
-eig_iter_ = [ math.fabs((x-eig_exact)/eig_exact) for x in eig_iter ]
+#  print(eig_iter)
+  print("Dense eigenvalue = ", eig_exact)
 
-plt.plot(iter_, eig_iter_, label= "power")
+  iter_ = np.array(range(0, len(eig_iter) ))
+
+  eig_iter_ = [ math.fabs((x-eig_exact)/eig_exact) for x in eig_iter ]
+
+  return iter_, eig_iter_, eig_exact
+
+
+# ----------------------------------------
+
+
+p_iter, p_eig_iter, p_eig_exact = load_eigen("power_store.pick") 
+plt.plot(p_iter, p_eig_iter, label= "power")
+
+vqe_iter, vqe_eig_iter, vqe_eig_exact = load_eigen("VQE_store.pick") 
+plt.plot(vqe_iter, vqe_eig_iter, label= "VQE")
+
+
 
 plt.xlabel("i")
 plt.ylabel(r"$\mid (\lambda_i - \lambda_i^{exact}) / \lambda_i^{exact} \mid$")

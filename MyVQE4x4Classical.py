@@ -11,11 +11,14 @@ import scipy
 from scipy import linalg
 from scipy.optimize import minimize
 from numpy import random
+import pickle
 
 M = ['Nelder-Mead', 'Powell', 'CG', 'BFGS']
 algorithm = 'Powell'
 #algorithm = 'Nelder-Mead'
 filename = "H_store_A.npy"
+
+eig_store = [] 
 
 try:
   H = np.load(filename)
@@ -106,10 +109,12 @@ Nfeval = 1
 
 def callbackF(Xi):
     global Nfeval
+    global eig_store 
+
     ff =  VQE(Xi,H)
     print("Iter", Nfeval, Xi, "eigenvalue_min=" , ff)
     Nfeval += 1
-
+    eig_store.append(ff)
 
 
 guess = [2*math.pi*random.uniform(0,1), 2*math.pi*random.uniform(0,1), 
@@ -161,3 +166,16 @@ for i in range(0, 4) :
 
    print(f"Exact Eigenvalue = {E_true[i].real:.3f}" , f"dot_prod = {dd:.3f}" )
 #   print(EigenVectors[:,i])
+
+
+
+print("DEBUG" , eig_store )
+
+data = [E_min_true.real , eig_store] 
+
+file_out = "VQE_store.pick"
+with open(file_out, "wb") as f:
+    pickle.dump(data, f)
+
+print("Written the results to " , file_out)
+
