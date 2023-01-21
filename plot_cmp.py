@@ -33,8 +33,9 @@ def load_eigen(file_in) :
 p_iter, p_eig_iter, p_eig_exact = load_eigen("power_store.pick") 
 plt.plot(p_iter, p_eig_iter, label= "power")
 
-vqe_iter, vqe_eig_iter, vqe_eig_exact = load_eigen("VQE_store.pick") 
-plt.plot(vqe_iter, vqe_eig_iter, label= "VQE")
+for alg_ in [ "BFGS" , "CG" , "Nelder-Mead" , "Powell" ]  :
+  vqe_iter, vqe_eig_iter, vqe_eig_exact = load_eigen("VQE_" + alg_ +  "_store.pick") 
+  plt.plot(vqe_iter, vqe_eig_iter, label= "VQE, " + alg_ )
 
 
 plt.title("Error on eigenvalue with iteration for 4x4 matrix")

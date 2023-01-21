@@ -14,10 +14,10 @@ from numpy import random
 import pickle
 
 M = ['Nelder-Mead', 'Powell', 'CG', 'BFGS']
-#algorithm = 'Powell'
+algorithm = 'Powell'
 #algorithm = 'Nelder-Mead'
 #algorithm = 'CG'
-algorithm = 'BFGS'
+#algorithm = 'BFGS'
 filename = "H_store_A.npy"
 
 eig_store = [] 
@@ -175,7 +175,7 @@ print("DEBUG" , eig_store )
 
 data = [E_min_true.real , eig_store] 
 
-file_out = "VQE_store.pick"
+file_out = "VQE_" + algorithm + "_store.pick"
 with open(file_out, "wb") as f:
     pickle.dump(data, f)
 

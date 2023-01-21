@@ -64,7 +64,7 @@ for i in range(0,dim) :
 
 
 b = np.random.rand(dim,1)
-bN, eig_iter = power_method(H,b,50, con)
+bN, eig_iter = power_method(H,b,150, con)
 lambdaN = RQ(H,bN) - con
 print("Power estimate of lowest eigenvalue", lambdaN)
 
