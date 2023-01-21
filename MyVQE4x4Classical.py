@@ -14,8 +14,10 @@ from numpy import random
 import pickle
 
 M = ['Nelder-Mead', 'Powell', 'CG', 'BFGS']
-algorithm = 'Powell'
+#algorithm = 'Powell'
 #algorithm = 'Nelder-Mead'
+#algorithm = 'CG'
+algorithm = 'BFGS'
 filename = "H_store_A.npy"
 
 eig_store = [] 

@@ -37,11 +37,12 @@ vqe_iter, vqe_eig_iter, vqe_eig_exact = load_eigen("VQE_store.pick")
 plt.plot(vqe_iter, vqe_eig_iter, label= "VQE")
 
 
-
+plt.title("Error on eigenvalue with iteration for 4x4 matrix")
 plt.xlabel("i")
 plt.ylabel(r"$\mid (\lambda_i - \lambda_i^{exact}) / \lambda_i^{exact} \mid$")
 plt.yscale('log')
 
 plt.legend()
+plt.savefig("power_Vs_VQE_4x4.png")
 
 plt.show()
