@@ -80,7 +80,7 @@ def measure(case,qubit,QC):
 
 def S(sn):
     S = 0    
-    while S*sn < 2**(sn):
+    while S*sn < 2**(sn+1):
         S = S + 1
     L = []
     for kl in range(S):
