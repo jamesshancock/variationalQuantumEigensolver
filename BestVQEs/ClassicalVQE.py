@@ -72,7 +72,7 @@ for k in range(n):
 
 def S(sn):
     S = 0    
-    while S*sn < 2**(sn):
+    while S*sn < 2**(sn+1):
         S = S + 1
     return S
 
