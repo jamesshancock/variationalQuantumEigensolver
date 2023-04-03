@@ -187,8 +187,14 @@ H, Coef, matri = Hf(h)
 E_true, EigenVectors = np.linalg.eig(H)
 E_min_true = min(E_true.real)
 
+#===========================================
+#hyperparameters
 shot = 16
 shot0 = 3000
+samples = 300
+BITS = 100
+#===========================================
+
 global n
 n = len(h[1])
 global S1
@@ -197,7 +203,6 @@ S1, L = S(n)
 npara = S1*n + n
 
 X = []
-samples = 100
 for J in range(1,samples+1):
     xtemp = []
     for kx in range(npara):
@@ -264,7 +269,6 @@ def opt_sample(X, y, model):
 
 global model_store
 model_store = []
-BITS = 600
 for i in range(BITS):
     x_opt = opt_sample(X, Y, model)
     actual = VQE(x_opt,h,shot)
