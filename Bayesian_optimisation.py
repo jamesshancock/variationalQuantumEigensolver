@@ -189,10 +189,10 @@ E_min_true = min(E_true.real)
 
 #===========================================
 #hyperparameters
-shot = 16
-shot0 = 3000
-samples = 300
-BITS = 100
+shot = 16 #shots used by BO
+shot0 = 3000 #shots used by powell
+samples = 300 #number of sample points used for BO
+BITS = 100 #number of BO iterations
 #===========================================
 
 global n
